@@ -5,7 +5,7 @@ import { getTodo, updateTodo } from '../../businessLogic/todos'
 import { getToken, parseUserId } from '../../auth/utils';
 
 import { createLogger } from '../../utils/logger'
-const logger = createLogger('attachFileToTodo')
+const logger = createLogger('attachFileToTodoLambda')
 
 const imageBucketName = process.env.IMAGES_S3_BUCKET;
 

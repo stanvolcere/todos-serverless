@@ -21,5 +21,6 @@ export function getToken(authHeader: string): string {
 	const split = authHeader.split(' ')
 	const token = split[1]
 
+
 	return token
 }

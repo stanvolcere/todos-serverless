@@ -5,16 +5,19 @@ import { getAllTodos } from '../../businessLogic/todos'
 
 import { getToken, parseUserId } from '../../auth/utils';
 
+import { createLogger } from '../../utils/logger'
+const logger = createLogger('getTodosLambda')
+
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-	//console.log(event)
 	try {
+		// Auth related
+		logger.info('authurising user');
 		const authorization = event.headers.Authorization
 		const token = getToken(authorization)
 		const userId = parseUserId(token);
-		console.log(userId)
 
+		logger.info('get todos for user' + userId);
 		const todos = await getAllTodos(userId)
-		console.log(todos)
 
 		// TODO: Get all TODO items for a current user
 		return {
@@ -28,7 +31,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 			})
 		}
 	} catch (err) {
-		console.log(err.message);
+		logger.error(err.message);
 		if (err.errorCode === 401) {
 			return {
 				statusCode: err.errorCode,
